@@ -1,0 +1,12 @@
+bin/
+build/
+.project
+.classpath
+.vscode
+.gradle/
+.vagrant
+.settings
+.pmd
+pmd-report.csv
+*.zip
+.gradletasknamecache
