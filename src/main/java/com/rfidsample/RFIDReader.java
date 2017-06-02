@@ -42,7 +42,8 @@ public class RFIDReader {
                 String sn = dev.readSN();
                 if (sn != null) {
                     System.out.println("send message \"card id is " + sn + "\" from device " + dev.getDeviceCode());
-                    callback.call(sn,dev.getDeviceCode());
+                    System.out.println("operator is "+initialCard);
+                    callback.call(sn,dev.getDeviceCode(),initialCard);
                 }
             }
         }
@@ -85,7 +86,7 @@ public class RFIDReader {
             dev.setDeviceCode(deviceCode);
             hardwareid++;
             initialedDevices.add(dev);
-            System.out.println(dev.getDeviceCode() + " was initialed");
+            System.out.println("Authentication passed, employee "+initialCard+" login into "+dev.getDeviceCode()+" successfull");
         }
         return hardwareid;
     }
