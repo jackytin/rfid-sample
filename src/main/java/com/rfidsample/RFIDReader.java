@@ -18,6 +18,7 @@ public class RFIDReader {
 
     public void doInitial(String initialCard,String[] deviveCodes) {
      this.initialCard=initialCard;
+     this.deviveCodes=deviveCodes;
         list = new ArrayList();
         for (int i = 1; i <= deviveCodes.length; i++) {
             Device dev = new Device(i);

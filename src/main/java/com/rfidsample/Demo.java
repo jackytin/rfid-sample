@@ -24,7 +24,7 @@ public class Demo {
             this.deviceRemoveCall=deviceRemoveCall;   
         }
          String getURL(String rfid, String device){
-            return baseURL+cardGoods.get(rfid)+"/"+deviceRemoveCall.get(device);
+            return baseURL+deviceRemoveCall.get(device)+"/"+cardGoods.get(rfid)+"/"+device;
         }
         public void call(String rfid, String device) {
             String url=getURL(rfid,device);
@@ -49,13 +49,14 @@ public class Demo {
         Map<String, String> deviceRemoveCall =  new HashMap();      
         deviceRemoveCall.put("到达收货区", "transferToAnotherReceivingSpace");
         deviceRemoveCall.put("整到了出货区", "transferToAnotherShippingSpace");
-        deviceRemoveCall.put("重复了", "transferToAnotherShippingSpace");//?
+        deviceRemoveCall.put("重复了", "transferToAnotherShippingSpace");//TODO
         deviceRemoveCall.put("小超接受了", "transferToAnotherRetailStoreOrder");
        
-        Map<String, String> cardGoods = new HashMap();
-        cardGoods.put("rfid111", "G000001");
-        cardGoods.put("rfid222", "G000002");
-        cardGoods.put("rfid333", "G000003");
+        Map<String, String> cardGoods = new HashMap();;
+        cardGoods.put("2BE2A8F4", "G000001");//no 1
+        cardGoods.put("2BE15DC1", "G000002");// no 2
+        cardGoods.put("2BE2CBA9", "G000003"); //no 3
+        cardGoods.put("2BE0BC65", "G000004"); //no 3
    
         RemoteCall callback = new RemoteCall(cardGoods,deviceRemoveCall);
         rfidReader.doInitial(initialCard, device);
