@@ -120,7 +120,8 @@ public class Demo {
         cardGoods.put("2BE0BC65", "G000004"); // card no 3
 
         RemoteCall callback = new RemoteCall(cardGoods, deviceRemoveCall, device);
-        rfidReader.doInitial(initialCard, device);
+
+        rfidReader.doInitial(initialCard, device[0]);
 
         rfidReader.start(callback);
     }
