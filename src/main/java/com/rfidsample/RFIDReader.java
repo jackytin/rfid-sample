@@ -48,6 +48,8 @@ public class RFIDReader {
                     continue;
                 }
                 dev.setDeviceCode(deviveCode);
+                dev.beep(3, 10);
+                break;
         }
     }
 
