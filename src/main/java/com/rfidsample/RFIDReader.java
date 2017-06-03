@@ -49,7 +49,7 @@ public class RFIDReader {
                 }
                 dev.setDeviceCode(deviveCode);
                 dev.beep(3, 10);
-                break;
+                return ;
         }
     }
 

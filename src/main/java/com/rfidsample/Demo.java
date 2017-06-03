@@ -43,42 +43,25 @@ public class Demo {
         String getURL(String rfid, String device) {
             // return baseURL + deviceRemoveCall.get(device) + "/" +
             // cardGoods.get(rfid) + "/" + device;
-            return baseURL + deviceRemoveCall.get(device) + "/" + rfid + "/" + device;
+            return baseURL + deviceRemoveCall.get(device) + "/" + rfid + "/" + device + "/";
         }
 
 
 
-        void pack(String rfid, String device, String operator) {
-            String url = baseURL + deviceRemoveCall.get(device);
-            HttpPost httpost = new HttpPost(url);
-
-            try {
-                List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-                // 提交两个参数及值
-                nvps.add(new BasicNameValuePair("goodsId", cardGoods.get(rfid)));
-                nvps.add(new BasicNameValuePair("packageName", "这是一箱很贵重的物品"));
-                nvps.add(new BasicNameValuePair("rfid", rfid));
-                nvps.add(new BasicNameValuePair("packageTime", new SimpleDateFormat("YYYY-MM-DD").format(new Date())));
-                nvps.add(new BasicNameValuePair("description", "打包员" + operator + "在" + device + "进行的打包完成的操作"));
-                // 设置表单提交编码为UTF-8
-                httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
-                HttpResponse response = httpClient.execute(httpost);
-                HttpEntity entity = response.getEntity();
-                String body = EntityUtils.toString(entity);
-                System.out.println("response: " + body);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        String pack(String rfid, String device, String operator) {
+            // pack/goodsId/packageName/rfid/packageTime/description/
+            String description = "打包员" + operator + "在" + device + "进行的打包完成的操作";
+            return baseURL + "/" + cardGoods.get(rfid) + "/这是一箱很贵重的物品" + rfid + "/"
+                    + new SimpleDateFormat("YYYY-MM-DD").format(new Date()) + "/" + description + "/";
         }
 
 
 
         public void call(String rfid, String device, String operator) {
-            if (device == devices[0]) {
-                pack(rfid, device, operator);
-                return;
-            }
             String url = getURL(rfid, device);
+            if (device == devices[0]) {
+                url = pack(rfid, device, operator);
+            }
             System.out.println("call url " + url);
             HttpGet httpget = new HttpGet(url);
             try {
@@ -99,13 +82,13 @@ public class Demo {
 
         String initialCard = "2BE19935";
         String dev1 = "package";
-        String dev2 = "S000001";
-        String dev3 = "R000001";
-        String dev4 = "XCStore";
+        String dev2 = "RS000001";
+        String dev3 = "SS000001";
+        String dev4 = "RS000001";
 
         String[] device = { dev1, dev2, dev3, dev4 };
         Map<String, String> deviceRemoveCall = new HashMap();
-        deviceRemoveCall.put(dev1, "pack/goodsId/packageName/rfid/packageTime/description/");
+        deviceRemoveCall.put(dev1, "pack");
         // we receive the package
         deviceRemoveCall.put(dev2, "transferToAnotherReceivingSpace");
         // move the package here, prepare to send to store
